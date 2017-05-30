@@ -6,8 +6,10 @@ Simple, yet effective tool for removing Redux boilerplate code.
 [![CircleCI](https://circleci.com/gh/svagi/redux-routines.svg?style=shield)](https://circleci.com/gh/svagi/redux-routines)
 [![Coverage Status](https://coveralls.io/repos/github/svagi/redux-routines/badge.svg)](https://coveralls.io/github/svagi/redux-routines)
 
-## About
-`redux-routines` is utility library for [redux](https://github.com/reactjs/redux) whose main goal is simplicity and boilerplate reduction.
+
+## About
+
+The `redux-routines` is utility library for [redux](https://github.com/reactjs/redux) whose main goal is simplicity and boilerplate reduction.
 
 ## Installation
 
