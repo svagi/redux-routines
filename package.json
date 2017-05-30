@@ -27,7 +27,8 @@
     "postversion": "git push && git push --tags && npm publish && npm run clean",
     "test": "cross-env BABEL_ENV=commonjs jest src",
     "test:watch": "npm test -- --watch",
-    "test:cov": "npm test -- --coverage"
+    "test:cov": "npm test -- --coverage",
+    "coverage": "npm test && cat coverage/lcov.info | coveralls"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
