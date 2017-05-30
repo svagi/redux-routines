@@ -1,6 +1,6 @@
 {
   "name": "redux-routines",
-  "version": "1.0.0-0",
+  "version": "1.0.0-1",
   "description": "Simple, yet effective tool for removing Redux boilerplate code.",
   "keywords": [
     "redux",
