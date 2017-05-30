@@ -1,10 +1,17 @@
 # redux-routines
+
 Simple, yet effective tool for removing Redux boilerplate code.
+
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![CircleCI](https://circleci.com/gh/svagi/redux-routines.svg?style=shield)](https://circleci.com/gh/svagi/redux-routines)
+
+## About
+`redux-routines` is utility library for [redux](https://github.com/reactjs/redux) whose main goal is simplicity and boilerplate reduction.
 
 ## Installation
 
 ```sh
-npm install redux-routines
+npm install --save redux-routines
 ```
 
 ## The gist
@@ -75,3 +82,7 @@ store.dispatch(fetchUsers.success([1, 2]))
 store.dispatch(fetchUsers.fulfill())
 // { isProcessing: false, isFetching: false, data: [ 1, 2 ], error: null }
 ```
+
+### License
+
+MIT
