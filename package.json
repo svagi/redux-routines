@@ -19,12 +19,12 @@
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
-    "clean": "rimraf lib es coverage",
+    "clean": "rimraf lib coverage",
     "lint": "standard src -v",
     "build": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
     "preversion": "npm run clean && npm run lint && npm test && npm run build",
     "version": "npm run build && git add -f -A lib",
-    "postversion": "git push && git push --tags && npm run clean && npm publish",
+    "postversion": "git push && git push --tags && npm publish",
     "test": "cross-env BABEL_ENV=commonjs jest src",
     "test:watch": "npm test -- --watch",
     "test:cov": "npm test -- --coverage"
