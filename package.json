@@ -1,0 +1,40 @@
+{
+  "name": "redux-routines",
+  "version": "0.0.0",
+  "description": "Simple, yet effective tool for removing Redux boilerplate code.",
+  "keywords": [
+    "redux",
+    "routines",
+    "boilerplate"
+  ],
+  "homepage": "https://github.com/svagi/redux-routines#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svagi/redux-routines.git"
+  },
+  "bugs": {
+    "url": "https://github.com/svagi/redux-routines/issues"
+  },
+  "author": "Jan Svager <jan@svager.cz> (https://github.com/svagi)",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "scripts": {
+    "clean": "rimraf lib es coverage",
+    "lint": "standard src -v",
+    "build": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "preversion": "npm run clean && npm run lint && npm test && npm run build",
+    "version": "npm run build && git add -f -A lib",
+    "postversion": "git push && git push --tags && npm run clean && npm publish",
+    "test": "cross-env BABEL_ENV=commonjs jest src",
+    "test:watch": "npm test -- --watch",
+    "test:cov": "npm test -- --coverage"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "cross-env": "^5.0.0",
+    "jest": "^20.0.4",
+    "rimraf": "^2.6.1",
+    "standard": "^10.0.2"
+  }
+}
