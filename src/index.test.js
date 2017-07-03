@@ -81,17 +81,6 @@ describe('createRoutine', () => {
     expect(action.type).toContain('TRIGGER')
     expect(routine.state.trigger).toBe(true)
   })
-  it('should trigger on routine invocation with enhancer', () => {
-    const routine = createRoutine('test')
-    const enhancer = action => {
-      action.payload = action.payload + 1
-      return action
-    }
-    const action = routine(1, enhancer)
-    expect(action.type).toContain('TRIGGER')
-    expect(action.payload).toBe(2)
-    expect(routine.state.trigger).toBe(true)
-  })
 })
 
 describe('createAction', () => {

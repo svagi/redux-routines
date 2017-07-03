@@ -60,8 +60,8 @@ export function createRoutine (prefix, enhancer = identity) {
       return enhancer(createAction(routine.FULFILL, payload, ...args))
     }
   }
-  function call (payload, enhancer = identity) {
-    return enhancer(routine.trigger(payload))
+  function call (payload, ...args) {
+    return routine.trigger(payload, ...args)
   }
   return Object.assign(call, routine)
 }
