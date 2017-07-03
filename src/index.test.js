@@ -65,7 +65,10 @@ describe('createRoutine', () => {
     expect(state.fulfill).toBe(true)
   })
   it('should modify payload with enhancer', () => {
-    const routine = createRoutine('test', payload => payload + 1)
+    const routine = createRoutine('test', action => {
+      action.payload += 1
+      return action
+    })
     expect(routine.trigger(0).payload).toBe(1)
     expect(routine.request(0).payload).toBe(1)
     expect(routine.success(0).payload).toBe(1)

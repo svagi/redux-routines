@@ -39,25 +39,25 @@ export function createRoutine (prefix, enhancer = identity) {
     },
     trigger (payload, ...args) {
       routine.state.trigger = true
-      return createAction(routine.TRIGGER, enhancer(payload), ...args)
+      return enhancer(createAction(routine.TRIGGER, payload, ...args))
     },
     request (payload, ...args) {
       routine.state.request = true
-      return createAction(routine.REQUEST, enhancer(payload), ...args)
+      return enhancer(createAction(routine.REQUEST, payload, ...args))
     },
     success (payload, ...args) {
       routine.state.success = true
       routine.state.failure = false
-      return createAction(routine.SUCCESS, enhancer(payload), ...args)
+      return enhancer(createAction(routine.SUCCESS, payload, ...args))
     },
     failure (payload, ...args) {
       routine.state.success = false
       routine.state.failure = true
-      return createAction(routine.FAILURE, enhancer(payload), ...args)
+      return enhancer(createAction(routine.FAILURE, payload, ...args))
     },
     fulfill (payload, ...args) {
       routine.state.fulfill = true
-      return createAction(routine.FULFILL, enhancer(payload), ...args)
+      return enhancer(createAction(routine.FULFILL, payload, ...args))
     }
   }
   function call (payload, enhancer = identity) {
