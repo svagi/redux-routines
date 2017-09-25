@@ -13,7 +13,7 @@ export function prefixType (prefix, type) {
   if (typeof prefix !== 'string') {
     throw new Error('Invalid routine prefix. It should be string.')
   }
-  return `${prefix.toUpperCase()}_${type}`
+  return `${prefix}_${type}`
 }
 
 export function createAction (type, payload, ...args) {

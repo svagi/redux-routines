@@ -120,4 +120,7 @@ describe('prefixType', () => {
   it('should prefix type', () => {
     expect(prefixType('TEST', 'TYPE')).toBe('TEST_TYPE')
   })
+  it('should not modify prefix to uppercase', () => {
+    expect(prefixType('@@test/TEST', 'TYPE')).toBe('@@test/TEST_TYPE')
+  })
 })
