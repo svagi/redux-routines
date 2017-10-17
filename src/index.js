@@ -17,10 +17,7 @@ export function prefixType (prefix, type) {
 }
 
 export function createAction (type, payload, ...args) {
-  return Object.assign(...args, {
-    type: type,
-    payload: payload
-  })
+  return Object.assign({}, ...args, { type: type, payload: payload })
 }
 
 export function createRoutine (prefix, enhancer = identity) {

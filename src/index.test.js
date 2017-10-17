@@ -104,6 +104,14 @@ describe('createAction', () => {
       test: true
     })
   })
+  it('should not mutate action with additional properties', () => {
+    const type = 'TEST'
+    const props = { test: true }
+    const action1 = createAction('type1', null, props)
+    const action2 = createAction('type2', null, props)
+    expect(action1.type).toContain('type1')
+    expect(action2.type).toContain('type2')
+  })
 })
 
 describe('prefixType', () => {
