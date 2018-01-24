@@ -1,134 +1,95 @@
 /* global describe, it, expect */
-import { createAction, createRoutine, prefixType } from './index'
+import { createRoutine, createActionType, DEFAULT_SETTINGS } from './index'
+
+const { stages } = DEFAULT_SETTINGS
 
 describe('createRoutine', () => {
   it('should be a function', () => {
     const routine = createRoutine('test')
     expect(typeof routine).toBe('function')
   })
-  it('should have initial state', () => {
-    const { state } = createRoutine('test')
-    expect(state.trigger).toBe(false)
-    expect(state.request).toBe(false)
-    expect(state.success).toBe(false)
-    expect(state.failure).toBe(false)
-    expect(state.fulfill).toBe(false)
-  })
-  it('should have trigger state', () => {
+  it('should have all routine properties', () => {
     const routine = createRoutine('test')
-    const { state } = routine
-    expect(routine.trigger().type).toContain('TRIGGER')
-    expect(state.trigger).toBe(true)
-    expect(state.request).toBe(false)
-    expect(state.success).toBe(false)
-    expect(state.failure).toBe(false)
-    expect(state.fulfill).toBe(false)
-  })
-  it('should have request state', () => {
-    const routine = createRoutine('test')
-    const { state } = routine
-    expect(routine.request().type).toContain('REQUEST')
-    expect(state.trigger).toBe(false)
-    expect(state.request).toBe(true)
-    expect(state.success).toBe(false)
-    expect(state.failure).toBe(false)
-    expect(state.fulfill).toBe(false)
-  })
-  it('should have success state', () => {
-    const routine = createRoutine('test')
-    const { state } = routine
-    expect(routine.success().type).toContain('SUCCESS')
-    expect(state.trigger).toBe(false)
-    expect(state.request).toBe(false)
-    expect(state.success).toBe(true)
-    expect(state.failure).toBe(false)
-    expect(state.fulfill).toBe(false)
-  })
-  it('should have failure state', () => {
-    const routine = createRoutine('test')
-    const { state } = routine
-    expect(routine.failure().type).toContain('FAILURE')
-    expect(state.trigger).toBe(false)
-    expect(state.request).toBe(false)
-    expect(state.success).toBe(false)
-    expect(state.failure).toBe(true)
-    expect(state.fulfill).toBe(false)
-  })
-  it('should have fulfill state', () => {
-    const routine = createRoutine('test')
-    const { state } = routine
-    expect(routine.fulfill().type).toContain('FULFILL')
-    expect(state.trigger).toBe(false)
-    expect(state.request).toBe(false)
-    expect(state.success).toBe(false)
-    expect(state.failure).toBe(false)
-    expect(state.fulfill).toBe(true)
-  })
-  it('should modify payload with enhancer', () => {
-    const routine = createRoutine('test', action => {
-      action.payload += 1
-      return action
+    stages.forEach(stage => {
+      expect(routine).toHaveProperty(stage.toUpperCase())
+      expect(routine).toHaveProperty(stage.toLowerCase())
     })
-    expect(routine.trigger(0).payload).toBe(1)
-    expect(routine.request(0).payload).toBe(1)
-    expect(routine.success(0).payload).toBe(1)
-    expect(routine.failure(0).payload).toBe(1)
-    expect(routine.fulfill(0).payload).toBe(1)
   })
-  it('should trigger on routine invocation', () => {
+  it('should create all action types with default stages', () => {
     const routine = createRoutine('test')
-    const action = routine()
-    expect(action.type).toContain('TRIGGER')
-    expect(routine.state.trigger).toBe(true)
+    stages.forEach(stage => {
+      const actionCreator = routine[stage.toLowerCase()]
+      const actionType = routine[stage]
+      expect(actionType).toBe(`test/${stage}`)
+      expect(String(actionCreator)).toBe(actionType)
+    })
+  })
+  it('should create all action creators with default stages', () => {
+    const routine = createRoutine('test')
+    stages.forEach(stage => {
+      const actionCreator = routine[stage.toLowerCase()]
+      const actionType = routine[stage]
+      expect(actionCreator()).toEqual({ type: `test/${stage}` })
+      expect(actionCreator()).toEqual({ type: actionType })
+    })
+  })
+  it('should create routine with payloadCreator', () => {
+    const routine = createRoutine('test', val => val + 1)
+    stages.forEach(stage => {
+      const actionCreator = routine[stage.toLowerCase()]
+      expect(actionCreator(0).payload).toBe(1)
+    })
+  })
+  it('should create routine with metaCreator', () => {
+    const routine = createRoutine('test', null, () => ({ extra: true }))
+    stages.forEach(stage => {
+      const actionCreator = routine[stage.toLowerCase()]
+      expect(actionCreator().meta).toEqual({ extra: true })
+    })
+  })
+  it('should create routine with different separator', () => {
+    const routine = createRoutine('test', null, null, { separator: '+' })
+    stages.forEach(stage => {
+      const actionCreator = routine[stage.toLowerCase()]
+      expect(actionCreator()).toEqual({ type: `test+${stage}` })
+    })
+  })
+  it('should create routine with explicit stages', () => {
+    const stages = ['REQUEST', 'SUCCESS', 'FAILURE']
+    const routine = createRoutine('test', null, null, { stages: stages })
+    stages.forEach(stage => {
+      expect(routine).toHaveProperty(stage.toUpperCase())
+      expect(routine).toHaveProperty(stage.toLowerCase())
+    })
+    expect(routine).not.toHaveProperty('TRIGGER')
+    expect(routine).not.toHaveProperty('trigger')
+    expect(routine).not.toHaveProperty('FULFILL')
+    expect(routine).not.toHaveProperty('fulfill')
   })
 })
 
-describe('createAction', () => {
-  it('should create an action object', () => {
-    const type = 'TEST'
-    const payload = {}
-    const action = createAction(type, payload)
-    expect(action).toMatchObject({
-      type: type,
-      payload: payload
-    })
-  })
-  it('should create an action object with additional properties', () => {
-    const type = 'TEST'
-    const payload = {}
-    const props = { test: true }
-    const action = createAction(type, payload, props)
-    expect(action).toMatchObject({
-      type: type,
-      payload: payload,
-      test: true
-    })
-  })
-  it('should not mutate action with additional properties', () => {
-    const type = 'TEST'
-    const props = { test: true }
-    const action1 = createAction('type1', null, props)
-    const action2 = createAction('type2', null, props)
-    expect(action1.type).toContain('type1')
-    expect(action2.type).toContain('type2')
-  })
-})
-
-describe('prefixType', () => {
+describe('createActionType', () => {
   it('should throws if prefix is not specified', () => {
-    expect(prefixType).toThrow()
+    expect(() => createActionType()).toThrow()
   })
   it('should throws if prefix is a not string', () => {
-    expect(() => prefixType(0)).toThrow()
-    expect(() => prefixType(1)).toThrow()
-    expect(() => prefixType(true)).toThrow()
-    expect(() => prefixType(false)).toThrow()
-    expect(() => prefixType({})).toThrow()
+    expect(() => createActionType(0)).toThrow()
+    expect(() => createActionType(1)).toThrow()
+    expect(() => createActionType(true)).toThrow()
+    expect(() => createActionType(false)).toThrow()
+    expect(() => createActionType({})).toThrow()
+  })
+  it('should throws if stage is a not string', () => {
+    expect(() => createActionType('', 0)).toThrow()
+    expect(() => createActionType('', 1)).toThrow()
+    expect(() => createActionType('', true)).toThrow()
+    expect(() => createActionType('', false)).toThrow()
+    expect(() => createActionType('', {})).toThrow()
   })
   it('should prefix type', () => {
-    expect(prefixType('TEST', 'TYPE')).toBe('TEST_TYPE')
+    expect(createActionType('TEST', 'TYPE', '_')).toBe('TEST_TYPE')
   })
   it('should not modify prefix to uppercase', () => {
-    expect(prefixType('@@test/TEST', 'TYPE')).toBe('@@test/TEST_TYPE')
+    expect(createActionType('@test/TEST', 'TYPE', '_')).toBe('@test/TEST_TYPE')
   })
 })

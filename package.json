@@ -39,5 +39,8 @@
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",
     "standard": "^10.0.2"
+  },
+  "dependencies": {
+    "redux-actions": "^2.3.0"
   }
 }
