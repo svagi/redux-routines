@@ -6,7 +6,6 @@ Simple, yet effective tool for removing Redux boilerplate code.
 [![CircleCI](https://circleci.com/gh/svagi/redux-routines.svg?style=shield)](https://circleci.com/gh/svagi/redux-routines)
 [![Coverage Status](https://coveralls.io/repos/github/svagi/redux-routines/badge.svg)](https://coveralls.io/github/svagi/redux-routines)
 
-
 ## About
 
 The `redux-routines` is utility library for [redux](https://github.com/reactjs/redux) whose main goal is simplicity and boilerplate reduction.
@@ -17,7 +16,13 @@ The `redux-routines` is utility library for [redux](https://github.com/reactjs/r
 npm install --save redux-routines
 ```
 
+## Features
+
+* Predefined actions creators and action types for common async tasks in a single object called "routine"
+* [FSA](https://github.com/acdlite/flux-standard-action) compatible – based on [redux-actions](https://github.com/reduxactions/redux-actions) library
+
 ## The gist
+
 ```js
 import { createStore } from 'redux'
 import { createRoutine } from 'redux-routines'
@@ -54,7 +59,7 @@ const initialState = {
 }
 
 // The reducer
-function users (state = initialState, action) {
+function users(state = initialState, action) {
   switch (action.type) {
     case fetchUsers.TRIGGER:
       return { ...state, isProcessing: true }
@@ -71,9 +76,7 @@ function users (state = initialState, action) {
 
 // The store
 const store = createStore(users)
-store.subscribe(() =>
-  console.log(store.getState())
-)
+store.subscribe(() => console.log(store.getState()))
 
 // Describe state changes with routine actions
 store.dispatch(fetchUsers.trigger())

@@ -1,64 +1,37 @@
 /**
  * redux-routines
  */
-const identity = f => f
 
-export const TRIGGER = 'TRIGGER'
-export const REQUEST = 'REQUEST'
-export const SUCCESS = 'SUCCESS'
-export const FAILURE = 'FAILURE'
-export const FULFILL = 'FULFILL'
+import { createAction } from 'redux-actions'
 
-export function prefixType (prefix, type) {
-  if (typeof prefix !== 'string') {
-    throw new Error('Invalid routine prefix. It should be string.')
-  }
-  return `${prefix}_${type}`
+// Default routine settings
+export const DEFAULT_SETTINGS = {
+  separator: '/',
+  stages: ['TRIGGER', 'REQUEST', 'SUCCESS', 'FAILURE', 'FULFILL']
 }
 
-export function createAction (type, payload, ...args) {
-  return Object.assign({}, ...args, { type: type, payload: payload })
+// Routine action type factory
+export function createActionType(prefix, stage, separator) {
+  if (typeof prefix !== 'string' || typeof stage !== 'string') {
+    throw new Error('Invalid routine prefix or stage. It should be string.')
+  }
+  return `${prefix}${separator}${stage}`
 }
 
-export function createRoutine (prefix, enhancer = identity) {
-  const routine = {
-    TRIGGER: prefixType(prefix, TRIGGER),
-    REQUEST: prefixType(prefix, REQUEST),
-    SUCCESS: prefixType(prefix, SUCCESS),
-    FAILURE: prefixType(prefix, FAILURE),
-    FULFILL: prefixType(prefix, FULFILL),
-    state: {
-      trigger: false,
-      request: false,
-      success: false,
-      failure: false,
-      fulfill: false
-    },
-    trigger (payload, ...args) {
-      routine.state.trigger = true
-      return enhancer(createAction(routine.TRIGGER, payload, ...args))
-    },
-    request (payload, ...args) {
-      routine.state.request = true
-      return enhancer(createAction(routine.REQUEST, payload, ...args))
-    },
-    success (payload, ...args) {
-      routine.state.success = true
-      routine.state.failure = false
-      return enhancer(createAction(routine.SUCCESS, payload, ...args))
-    },
-    failure (payload, ...args) {
-      routine.state.success = false
-      routine.state.failure = true
-      return enhancer(createAction(routine.FAILURE, payload, ...args))
-    },
-    fulfill (payload, ...args) {
-      routine.state.fulfill = true
-      return enhancer(createAction(routine.FULFILL, payload, ...args))
-    }
+// Routine factory
+export function createRoutine(prefix, payloadCreator, metaCreator, settings) {
+  const { stages, separator } = Object.assign({}, DEFAULT_SETTINGS, settings)
+  const createRoutineAction = stage => {
+    const type = createActionType(prefix, stage, separator)
+    return createAction(type, payloadCreator, metaCreator)
   }
-  function call (payload, ...args) {
-    return routine.trigger(payload, ...args)
-  }
-  return Object.assign(call, routine)
+  return stages.reduce((routine, stage) => {
+    const actionCreator = createRoutineAction(stage)
+    return Object.assign(routine, {
+      [stage.toLowerCase()]: actionCreator,
+      [stage.toUpperCase()]: actionCreator.toString()
+    })
+  }, createRoutineAction(stages[0]))
 }
+
+export default createRoutine
