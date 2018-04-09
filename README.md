@@ -16,7 +16,7 @@ The `redux-routines` is utility library for [redux](https://github.com/reactjs/r
 npm install --save redux-routines
 ```
 
-## Features
+## Features
 
 * Predefined actions creators and action types for common async tasks in a single object called "routine"
 * [FSA](https://github.com/acdlite/flux-standard-action) compatible – based on [redux-actions](https://github.com/reduxactions/redux-actions) library
