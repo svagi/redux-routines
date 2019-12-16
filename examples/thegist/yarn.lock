@@ -983,9 +983,10 @@ readdirp@^2.0.0:
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
 
-redux-routines@*:
-  version "1.0.0-3"
-  resolved "https://registry.yarnpkg.com/redux-routines/-/redux-routines-1.0.0-3.tgz#133374679bbb7e9ec9e6a11801fa6bf238656289"
+redux-routines@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/redux-routines/-/redux-routines-1.0.0.tgz#d7049c26e17c81c37e6282e76e9cb6f3335604f8"
+  integrity sha1-1wScJuF8gcN+YoLnbpy28zNWBPg=
 
 redux@^3.6.0:
   version "3.6.0"

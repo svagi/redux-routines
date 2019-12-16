@@ -4,7 +4,7 @@
     "babel-cli": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "redux": "^3.6.0",
-    "redux-routines": "*"
+    "redux-routines": "1.0.0"
   },
   "scripts": {
     "start": "babel-node index.js"
