@@ -41,6 +41,6 @@
     "standard": "^10.0.2"
   },
   "dependencies": {
-    "redux-actions": "^2.3.0"
+    "redux-actions": "^2.6.5"
   }
 }
