@@ -3,8 +3,8 @@
 Simple, yet effective tool for removing Redux boilerplate code.
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![CircleCI](https://circleci.com/gh/svagi/redux-routines.svg?style=shield)](https://circleci.com/gh/svagi/redux-routines)
-[![Coverage Status](https://coveralls.io/repos/github/svagi/redux-routines/badge.svg)](https://coveralls.io/github/svagi/redux-routines)
+![](https://badgen.net/bundlephobia/min/redux-routines)
+![](https://badgen.net/bundlephobia/minzip/redux-routines)
 
 ## About
 
