@@ -18,6 +18,7 @@
   "author": "Jan Svager <jan@svager.cz> (https://github.com/svagi)",
   "license": "MIT",
   "main": "lib/index.js",
+  "module": "src/index.js",
   "scripts": {
     "clean": "rimraf lib coverage && git reset --hard",
     "lint": "standard src -v",
