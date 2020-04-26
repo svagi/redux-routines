@@ -19,6 +19,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "module": "src/index.js",
+  "sideEffects": false,
   "scripts": {
     "clean": "rimraf lib coverage && git reset --hard",
     "lint": "standard src -v",
