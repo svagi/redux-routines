@@ -11,7 +11,7 @@ export const DEFAULT_SETTINGS = {
 }
 
 // Routine action type factory
-export function createActionType(prefix, stage, separator) {
+export function createActionType (prefix, stage, separator) {
   if (typeof prefix !== 'string' || typeof stage !== 'string') {
     throw new Error('Invalid routine prefix or stage. It should be string.')
   }
@@ -19,7 +19,7 @@ export function createActionType(prefix, stage, separator) {
 }
 
 // Routine factory
-export function createRoutine(prefix, payloadCreator, metaCreator, settings) {
+export function createRoutine (prefix, payloadCreator, metaCreator, settings) {
   const { stages, separator } = Object.assign({}, DEFAULT_SETTINGS, settings)
   const createRoutineAction = stage => {
     const type = createActionType(prefix, stage, separator)

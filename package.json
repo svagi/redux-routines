@@ -27,16 +27,15 @@
     "preversion": "npm run clean && npm run lint && npm test && npm run build",
     "version": "npm run build && git add -f -A lib",
     "postversion": "git push && git push --tags && npm publish && npm run clean",
-    "test": "jest src"
+    "test": "standard src && jest src"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "cross-env": "^7.0.2",
-    "jest": "^25.4.0",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "jest": "^27.1.0",
     "rimraf": "^3.0.2",
-    "standard": "^14.3.3"
+    "standard": "^16.0.3"
   },
   "dependencies": {
     "redux-actions": "^2.6.5"
