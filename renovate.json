@@ -1,5 +1,12 @@
 {
   "extends": ["config:base"],
   "rangeStrategy": "update-lockfile",
-  "postUpdateOptions": ["yarnDedupeHighest"]
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    }
+  ]
 }
