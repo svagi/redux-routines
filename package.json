@@ -38,6 +38,6 @@
     "standard": "^17.0.0"
   },
   "dependencies": {
-    "redux-actions": "^2.6.5"
+    "redux-actions": "^3.0.0"
   }
 }
